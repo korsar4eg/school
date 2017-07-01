@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <p:menubar>
+        <p:submenu label="Преподавателям" icon="ui-icon-person">
+            <p:menuitem icon="ui-icon-note" value="Предметы" url="/lessons"/>
+            <p:menuitem icon="ui-icon-person" value="Преподаватели" url="/teachers"/>
+        </p:submenu>
+        <p:submenu label="Группы" icon="ui-icon-folder">
+            <p:menuitem value="Список групп" url="/groups" icon="ui-icon-document"/>
+            <p:menuitem value="Список студентов" url="/students" icon="ui-icon-suitcase"/>
+        </p:submenu>
+        <p:menuitem value="Аудитории" url="/rooms" icon="ui-icon-home"/>
+        <p:submenu label="Расписание" icon="ui-icon-calendar">
+            <p:menuitem value="Добавить запись" url="/schedule/add" icon="ui-icon-plusthick"/>
+            <p:menuitem value="Для преподавателей" url="/for-teachers" icon="ui-icon-calendar"/>
+            <p:menuitem value="Для студентов" url="/for-students" icon="ui-icon-calendar"/>
+        </p:submenu>
+    </p:menubar>
+
+
+    <p:commandButton value="Add" actionListener="#{university.addLesson}"
+                     oncomplete="PF('dtLessons').addRow()" process="@this"/>
+<h:form>
+    <p:dataTable var="lessons" value="#{university.lessons}" sortBy="#{lessons.code}" editable="true" widgetVar="dtLessons">
+        <p:column sortBy="#{lessons.code}" headerText="Code">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{lessons.code}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <h:inputText value="#{lessons.code}"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column  headerText="Предмет" sortBy="#{lessons.title}">
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{lessons.title}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <h:inputText value="#{lessons.title}"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column><p:rowEditor/></p:column>
+    </p:dataTable>
+</h:form>
+</h:body>
+</html>

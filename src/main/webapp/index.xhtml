@@ -9,10 +9,21 @@
 <h:head>
 </h:head>
 <h:body>
-    <h1>Hello World</h1>
-    <h:outputLabel>#{test.name}</h:outputLabel>
-    <h:form>
-        <p:editor value="#{test.name}" />
-    </h:form>
+   <p:menubar>
+       <p:submenu label="Преподавателям" icon="ui-icon-person">
+           <p:menuitem icon="ui-icon-note" value="Предметы" url="/retrieveAllLessons"/>
+           <p:menuitem icon="ui-icon-person" value="Преподаватели" url="/teachers"/>
+       </p:submenu>
+       <p:submenu label="Группы" icon="ui-icon-folder">
+           <p:menuitem value="Список групп" url="/groups" icon="ui-icon-document"/>
+           <p:menuitem value="Список студентов" url="/students" icon="ui-icon-suitcase"/>
+       </p:submenu>
+       <p:menuitem value="Аудитории" url="/rooms" icon="ui-icon-home"/>
+       <p:submenu label="Расписание" icon="ui-icon-calendar">
+           <p:menuitem value="Добавить запись" url="/schedule/add" icon="ui-icon-plusthick"/>
+           <p:menuitem value="Для преподавателей" url="/for-teachers" icon="ui-icon-calendar"/>
+           <p:menuitem value="Для студентов" url="/for-students" icon="ui-icon-calendar"/>
+       </p:submenu>
+   </p:menubar>
 </h:body>
 </html>
