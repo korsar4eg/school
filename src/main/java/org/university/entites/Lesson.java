@@ -1,11 +1,21 @@
 package org.university.entites;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import java.io.Serializable;
 
-public class Lesson {
+@ManagedBean
+@RequestScoped
+public class Lesson implements Serializable {
 
     private int code;
     private String title;
 
+
+    public Lesson()
+    {
+
+    }
 
     public Lesson(int code, String title)
     {

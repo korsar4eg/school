@@ -11,7 +11,145 @@
             <!--<from-outcome>retrieveAllLessons</from-outcome>-->
             <to-view-id>lessons.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <to-view-id>teachers.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <to-view-id>students.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <to-view-id>groups.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
-    
-    
+    <navigation-rule>
+        <from-view-id>lessons.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addLesson</from-outcome>
+            <to-view-id>add-lesson.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteLesson</from-outcome>
+            <to-view-id>lessons.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>add-lesson.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>lessons.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>teachers.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addTeacher</from-outcome>
+            <to-view-id>add-teacher.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteTeacher</from-outcome>
+            <to-view-id>teachers.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>add-teacher.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successTeacher</from-outcome>
+            <to-view-id>teachers.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>teachers.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addTeacher</from-outcome>
+            <to-view-id>add-teacher.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteTeacher</from-outcome>
+            <to-view-id>teachers.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>add-teacher.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successTeacher</from-outcome>
+            <to-view-id>teachers.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <navigation-rule>
+        <from-view-id>students.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addStudents</from-outcome>
+            <to-view-id>add-students.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteStudent</from-outcome>
+            <to-view-id>students.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>add-student.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successStudent</from-outcome>
+            <to-view-id>students.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>students.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addStudent</from-outcome>
+            <to-view-id>add-student.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteStudent</from-outcome>
+            <to-view-id>students.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>add-teacher.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successTeacher</from-outcome>
+            <to-view-id>teachers.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>groups.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addGroup</from-outcome>
+            <to-view-id>add-groups.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addStudentToGroup</from-outcome>
+            <to-view-id>add-student-to-group.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteGroup</from-outcome>
+            <to-view-id>groups.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>add-group.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successGroups</from-outcome>
+            <to-view-id>groups.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>add-student-to-group.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successGroupsToStudents</from-outcome>
+            <to-view-id>groups.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+
 </faces-config>

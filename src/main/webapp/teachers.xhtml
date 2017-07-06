@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://university.org/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <c:mainMenu/>
+    <p:panel  header="Преподаватели" style="margin:20px">
+
+        <p:button outcome="addTeacher" value="Добавить преподавателя" icon="ui-icon-plus"/>
+
+        <h:form>
+            <p:dataTable var="teachers" value="#{university.teachers}"  sortBy="#{teachers.id}" editable="true">
+                <p:column sortBy="#{teachers.id}" headerText="id">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{teachers.id}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{teachers.id}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{teachers.firstName}" headerText="Имя">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{teachers.firstName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{teachers.firstName}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{teachers.middleName}" headerText="Второе имя">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{teachers.middleName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{teachers.middleName}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{teachers.lastName}" headerText="Фамилия">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{teachers.lastName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{teachers.lastName}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{teachers.dateOfBirth}" headerText="Дата рождения">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputFormat value="{0, date, dd-MM-yy}">
+                                <f:param value="#{teachers.dateOfBirth}"/>
+                            </h:outputFormat>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar value="#{teachers.dateOfBirth}" mode="popup" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+
+                <p:column sortBy="#{teachers.position}" headerText="Позиция">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{teachers.position}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{teachers.position}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column sortBy="#{teachers.lesson.title}" headerText="Предмет">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{teachers.lesson.title}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu value="#{teachers.lesson}" converter="#{lessonConverterBean}">
+                                <f:selectItems value="#{university.lessons}" var="lesson" itemLabel="#{lesson.title}" itemValue="#{lesson}" />
+                            </h:selectOneMenu>
+                        </f:facet>
+
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column>
+                    <p:rowEditor style="width:30px; display: block; float: left;"/>
+                    <p:commandButton ajax="false" outcome="deleteTeacher" actionListener="#{university.deleteTeacher(teachers.id)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:panel>
+</h:body>
+</html>

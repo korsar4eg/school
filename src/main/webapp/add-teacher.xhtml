@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://university.org/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <c:mainMenu/>
+
+    <h:form>
+        <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+
+            <h:outputLabel for="id" value="id: " />
+            <p:spinner id="id" value="#{teacher.id}"  >
+                <f:validator validatorId="codeValidator"/>
+            </p:spinner>
+            <h:message for="id" style="color:#f00" />
+
+
+            <h:outputLabel for="firstName" value="Имя: " />
+            <p:inputText id="firstName" value="#{teacher.firstName}" required="true" requiredMessage="Имя обязательно">
+                <f:validateLength minimum="3" />
+            </p:inputText>
+            <h:message for="firstName" style="color:#f00" />
+
+            <h:outputLabel for="middleName" value="Отчество: " />
+            <p:inputText id="middleName" value="#{teacher.middleName}" required="true" requiredMessage="Отчество обязательно">
+                <f:validateLength minimum="3" />
+            </p:inputText>
+            <h:message for="middleName" style="color:#f00" />
+
+            <h:outputLabel for="lastName" value="Фамилия: " />
+            <p:inputText id="lastName" value="#{teacher.lastName}" required="true" requiredMessage="Фамилия обязательно">
+                <f:validateLength minimum="3" />
+            </p:inputText>
+            <h:message for="lastName" style="color:#f00" />
+
+            <h:outputLabel for="dateOfBirth" value="Дата рождения: " />
+            <p:calendar value="#{teacher.dateOfBirth}" id="dateOfBirth" mode="popup" />
+            <h:message for="dateOfBirth" style="color:#f00" />
+
+            <h:outputLabel for="address" value="Адрес: " />
+            <p:inputText id="address" value="#{teacher.address}" required="true" requiredMessage="Адрес обязательно">
+                <f:validateLength minimum="3" />
+            </p:inputText>
+            <h:message for="address" style="color:#f00" />
+
+            <h:outputLabel  value="Предмет: " />
+            <h:selectOneMenu id="lesson" value="#{teacher.lesson}" converter="#{lessonConverterBean}">
+                <f:selectItems value="#{university.lessons}" var="lesson" itemLabel="#{lesson.title}" itemValue="#{lesson}" />
+            </h:selectOneMenu>
+            <h:message for="lesson" style="color:#f00" />
+
+            <h:outputLabel for="position" value="Позиция: " />
+            <p:inputText id="position" value="#{teacher.position}" required="true" requiredMessage="Позиция обязательно">
+                <f:validateLength minimum="3" />
+            </p:inputText>
+            <h:message for="position" style="color:#f00" />
+
+
+
+        </h:panelGrid>
+        <p:commandButton value="Сохранить" ajax="false" actionListener="#{university.addTeacher(teacher)}" />
+    </h:form>
+
+</h:body>
+</html>

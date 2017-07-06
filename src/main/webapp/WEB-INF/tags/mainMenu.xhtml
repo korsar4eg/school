@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <p:menubar>
+        <p:submenu label="Преподавателям" icon="ui-icon-person">
+            <p:menuitem icon="ui-icon-note" value="Предметы" url="/lessons.xhtml"/>
+            <p:menuitem icon="ui-icon-person" value="Преподаватели" url="/teachers.xhtml"/>
+        </p:submenu>
+        <p:submenu label="Группы" icon="ui-icon-folder">
+            <p:menuitem value="Список групп" url="/groups.xhtml" icon="ui-icon-document"/>
+            <p:menuitem value="Список студентов" url="/students.xhtml" icon="ui-icon-suitcase"/>
+        </p:submenu>
+        <p:menuitem value="Аудитории" url="/rooms" icon="ui-icon-home"/>
+        <p:submenu label="Расписание" icon="ui-icon-calendar">
+            <p:menuitem value="Добавить запись" url="/schedule/add" icon="ui-icon-plusthick"/>
+            <p:menuitem value="Для преподавателей" url="/for-teachers" icon="ui-icon-calendar"/>
+            <p:menuitem value="Для студентов" url="/for-students" icon="ui-icon-calendar"/>
+        </p:submenu>
+    </p:menubar>
+</h:body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://university.org/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+    <c:mainMenu/>
+
+    <h:form>
+        <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+
+            <h:outputLabel  value="Группы: " />
+            <h:selectOneMenu id="groups" converter="groupConverter" value="#{group}">
+                <f:selectItems value="#{university.groups}" var="groupItem" itemLabel="#{groupItem.title}" itemValue="#{groupItem}" />
+            </h:selectOneMenu>
+            <h:message for="groups" style="color:#f00" />
+
+            <h:outputLabel  value="Предмет: " />
+            <h:selectOneMenu id="students" value="#{group.students}" converter="studentsConverter" >
+                <f:selectItems value="#{university.students}" var="student" itemLabel="#{student.firstName} #{student.lastName}" itemValue="#{student}" />
+            </h:selectOneMenu>
+            <h:message for="students" style="color:#f00" />
+
+
+
+        </h:panelGrid>
+        <p:commandButton value="Сохранить" ajax="false" actionListener="#{university.addStudentToGroup(groupItem, student)}" />
+    </h:form>
+
+</h:body>
+</html>

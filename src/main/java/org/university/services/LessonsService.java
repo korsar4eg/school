@@ -19,7 +19,6 @@ public class LessonsService {
         lessons.add(new Lesson(3, "english"));
         lessons.add(new Lesson(4, "history"));
         return  lessons;
-
     }
 
 }
