@@ -2,7 +2,6 @@ package org.university.convertors;
 
 
 import org.university.entites.Group;
-import org.university.entites.Lesson;
 import org.university.services.University;
 
 import javax.faces.bean.ManagedBean;

@@ -132,27 +132,30 @@ public class University implements Serializable {
 
     public String addStudentToGroup(Group group, Student student)
     {
-        System.out.println("yes it is " + group + " " + student);
-//        for (int i = 0; i < groups.size(); i++){
-//
-//            if (groups.get(i).getId() == groupId){
-//                Group groupTmp = groups.get(i);
-//                List<Person> students = groupTmp.getStudents();
-//                Person student = null;
-//                for (int j = 0; j < students.size(); j++){
-//                    if (students.get(j).getId() == studentId){
-//                        student = students.get(i);
-//                        break;
-//                    }
-//                }
-//                students.add(student);
-//                groupTmp.setStudents(students);
-//                groups.remove(i);
-//                groups.add(groupTmp);
-//                break;
-//            }
 
-//        }
+        int groupId = group.getId();
+        int studentId = student.getId();
+
+        for (int i = 0; i < groups.size(); i++){
+
+            if (groups.get(i).getId() == groupId){
+                Group groupTmp = groups.get(i);
+                List<Person> students = groupTmp.getStudents();
+                Person studentItem = null;
+                for (int j = 0; j < students.size(); j++){
+                    if (students.get(j).getId() == studentId){
+                        studentItem = students.get(i);
+                        break;
+                    }
+                }
+                students.add(studentItem);
+                groupTmp.setStudents(students);
+                groups.remove(i);
+                groups.add(groupTmp);
+                break;
+            }
+
+        }
         return "successGroupsToStudents";
     }
 

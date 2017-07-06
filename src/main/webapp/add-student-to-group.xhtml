@@ -16,21 +16,19 @@
         <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
 
             <h:outputLabel  value="Группы: " />
-            <h:selectOneMenu id="groups" converter="groupConverter" value="#{group}">
+            <h:selectOneMenu id="groups" converter="#{groupConverterBean}" value="#{group}">
                 <f:selectItems value="#{university.groups}" var="groupItem" itemLabel="#{groupItem.title}" itemValue="#{groupItem}" />
             </h:selectOneMenu>
             <h:message for="groups" style="color:#f00" />
 
             <h:outputLabel  value="Предмет: " />
-            <h:selectOneMenu id="students" value="#{group.students}" converter="studentsConverter" >
-                <f:selectItems value="#{university.students}" var="student" itemLabel="#{student.firstName} #{student.lastName}" itemValue="#{student}" />
+            <h:selectOneMenu id="students" value="#{student}" converter="#{studentsConverterBean}">
+                <f:selectItems value="#{university.students}" var="studentItem" itemLabel="#{studentItem.firstName} #{studentItem.lastName}" itemValue="#{studentItem}" />
             </h:selectOneMenu>
             <h:message for="students" style="color:#f00" />
 
-
-
         </h:panelGrid>
-        <p:commandButton value="Сохранить" ajax="false" actionListener="#{university.addStudentToGroup(groupItem, student)}" />
+        <p:commandButton value="Сохранить" ajax="false" actionListener="#{university.addStudentToGroup(group, student)}"  action="successGroupsToStudents" />
     </h:form>
 
 </h:body>
