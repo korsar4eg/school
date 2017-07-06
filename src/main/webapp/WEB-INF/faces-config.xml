@@ -20,6 +20,9 @@
         <navigation-case>
             <to-view-id>groups.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <to-view-id>rooms.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>lessons.xhtml</from-view-id>
@@ -148,6 +151,26 @@
         <navigation-case>
             <from-outcome>successGroupsToStudents</from-outcome>
             <to-view-id>groups.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <navigation-rule>
+        <from-view-id>rooms.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addRoom</from-outcome>
+            <to-view-id>add-room.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteRoom</from-outcome>
+            <to-view-id>rooms.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>add-room.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successRoom</from-outcome>
+            <to-view-id>rooms.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

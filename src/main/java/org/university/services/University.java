@@ -15,6 +15,7 @@ public class University implements Serializable {
     private List<Person> teachers;
     private List<Person> students;
     private List<Group> groups;
+    private List<Room> rooms;
 
     @ManagedProperty(value = "#{lessonsService}")
     private LessonsService lessonsService;
@@ -25,6 +26,9 @@ public class University implements Serializable {
     @ManagedProperty(value = "#{groupService}")
     private GroupService groupService;
 
+    @ManagedProperty(value = "#{roomsService}")
+    private RoomsService roomsService;
+
 
     @PostConstruct
     public void init()
@@ -33,7 +37,7 @@ public class University implements Serializable {
         teachers = personsService.createTeachers();
         students = personsService.createStudents();
         groups = groupService.createGroups();
-
+        rooms = roomsService.createRooms();
     }
 
     public List<Lesson> getLessons() {
@@ -124,6 +128,11 @@ public class University implements Serializable {
         return "success";
     }
 
+    public void addRoom(Room room)
+    {
+        rooms.add(room);
+    }
+
     public String addGroup(Group group)
     {
         groups.add(group);
@@ -169,6 +178,16 @@ public class University implements Serializable {
        }
     }
 
+    public void deleteRoom(String code)
+    {
+        for (Room room: rooms){
+            if (room.getId() == code){
+                rooms.remove(room);
+                return;
+            }
+        }
+    }
+
     public List<Person> getTeachers() {
         return teachers;
     }
@@ -199,5 +218,21 @@ public class University implements Serializable {
 
     public void setGroups(List<Group> groups) {
         this.groups = groups;
+    }
+
+    public RoomsService getRoomsService() {
+        return roomsService;
+    }
+
+    public void setRoomsService(RoomsService roomsService) {
+        this.roomsService = roomsService;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 }

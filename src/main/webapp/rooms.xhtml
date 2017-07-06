@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://university.org/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <c:mainMenu/>
+    <p:panel  header="Аудитории" style="margin:20px">
+
+        <p:button outcome="addRoom" value="Добавить аудиторию" icon="ui-icon-plus"/>
+
+        <h:form>
+            <p:dataTable var="rooms" value="#{university.rooms}"  sortBy="#{rooms.id}" editable="true" widgetVar="dtrooms">
+                <p:column sortBy="#{rooms.id}" headerText="#">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{rooms.id}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{rooms.id}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column  headerText="Вместимость" sortBy="#{rooms.capacity}">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{rooms.capacity}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{rooms.capacity}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column>
+                    <p:rowEditor style="width:30px; display: block; float: left;"/>
+                    <p:commandButton ajax="false" outcome="deleteRoom" actionListener="#{university.deleteRoom(rooms.id)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:panel>
+</h:body>
+</html>
