@@ -7,8 +7,6 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
-            <!--<from-action>#{lessonsController.retrieveAll}</from-action>-->
-            <!--<from-outcome>retrieveAllLessons</from-outcome>-->
             <to-view-id>lessons.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
@@ -22,6 +20,15 @@
         </navigation-case>
         <navigation-case>
             <to-view-id>rooms.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <to-view-id>add-schedule.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <to-view-id>build-schedule-teacher.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <to-view-id>build-schedule-student.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -171,6 +178,28 @@
         <navigation-case>
             <from-outcome>successRoom</from-outcome>
             <to-view-id>rooms.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>build-schedule-teacher.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>scheduleTeacherResult</from-outcome>
+            <to-view-id>schedule-teacher-result.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>build-schedule-student.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>scheduleStudentResult</from-outcome>
+            <to-view-id>schedule-student-result.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>add-schedule.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>successSchedule</from-outcome>
+            <to-view-id>build-schedule-teacher.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

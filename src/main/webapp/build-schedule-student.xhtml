@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://university.org/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<h:body>
+    <c:mainMenu/>
+    <p:panel  header="Построить распиание для студента" style="margin:20px">
+
+        <h:form>
+            <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+
+
+                <p:calendar value="#{startDate}" id="startDate" mode="popup" mask="true" pattern="dd/MM/yyyy" placeholder="Начало" />
+                <h:message for="startDate" style="color: #f00"/>
+                <p:calendar value="#{finishDate}" id="finishDate" mode="popup"  mask="true" widgetVar="finishDate" pattern="dd/MM/yyyy" placeholder="Окончание"/>
+
+
+                <h:outputLabel value="Дата окончания:" for="month"/>
+                <p:selectBooleanCheckbox  id="month" value="#{fullMonth}">
+                    <pe:javascript event="change" execute="PF('finishDate').jq.toggle();" />
+                </p:selectBooleanCheckbox>
+                <h:outputLabel/>
+
+                <h:outputLabel  value="Студент: " />
+                <h:selectOneMenu id="student" value="#{student}" converter="#{studentsConverterBean}">
+                    <f:selectItems value="#{university.students}" var="studentItem" itemLabel="#{studentItem.firstName} #{studentItem.lastName}" itemValue="#{studentItem}" />
+                </h:selectOneMenu>
+                <h:message for="student" style="color:#f00" />
+
+
+
+            </h:panelGrid>
+            <p:commandButton value="Построить" ajax="false" actionListener="#{scheduleService.buildStudentSchedule(startDate, finishDate, fullMonth, student)}" action="scheduleStudentResult"/>
+        </h:form>
+
+    </p:panel>
+</h:body>
+</html>

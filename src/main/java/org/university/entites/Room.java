@@ -2,10 +2,11 @@ package org.university.entites;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import java.io.Serializable;
 
 @ManagedBean(name = "room")
 @RequestScoped
-public class Room {
+public class Room implements Serializable{
 
     private String id;
     private int capacity;

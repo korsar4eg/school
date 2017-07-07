@@ -16,6 +16,9 @@ public class University implements Serializable {
     private List<Person> students;
     private List<Group> groups;
     private List<Room> rooms;
+    private Schedule schedule;
+
+    private List<ScheduleRecord> resultRecords;
 
     @ManagedProperty(value = "#{lessonsService}")
     private LessonsService lessonsService;
@@ -139,6 +142,8 @@ public class University implements Serializable {
         return "successGroups";
     }
 
+
+
     public String addStudentToGroup(Group group, Student student)
     {
 
@@ -181,7 +186,7 @@ public class University implements Serializable {
     public void deleteRoom(String code)
     {
         for (Room room: rooms){
-            if (room.getId() == code){
+            if (room.getId().equals(code)){
                 rooms.remove(room);
                 return;
             }
@@ -235,4 +240,13 @@ public class University implements Serializable {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+
 }

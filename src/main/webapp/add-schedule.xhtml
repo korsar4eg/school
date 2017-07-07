@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://university.org/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+    <c:mainMenu/>
+
+    <h:form>
+        <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
+
+            <h:outputLabel for="lessonDate" value="Дата урока: " />
+            <p:calendar value="#{lessonDate}" id="lessonDate" mode="popup" pattern="dd-MM-yyyy HH:mm"/>
+            <h:message for="lessonDate" style="color:#f00" />
+
+            <h:outputLabel  value="Преподаватель: " />
+            <h:selectOneMenu id="teacher" value="#{teacher}" converter="#{teachersConverterBean}">
+                <f:selectItems value="#{university.teachers}" var="teacherItem" itemLabel="#{teacherItem.firstName} #{teacherItem.lastName}" itemValue="#{teacherItem}" />
+            </h:selectOneMenu>
+            <h:message for="teacher" style="color:#f00" />
+
+            <h:outputLabel  value="Группа: " />
+            <h:selectOneMenu id="group" value="#{group}" converter="#{groupConverterBean}">
+                <f:selectItems value="#{university.groups}" var="groupItem" itemLabel="#{groupItem.title}" itemValue="#{groupItem}" />
+            </h:selectOneMenu>
+            <h:message for="group" style="color:#f00" />
+
+
+            <h:outputLabel  value="Аудитория: " />
+            <h:selectOneMenu id="room" value="#{room}" converter="#{roomConverterBean}">
+                <f:selectItems value="#{university.rooms}" var="roomItem" itemLabel="#{roomItem.id}" itemValue="#{roomItem}" />
+            </h:selectOneMenu>
+            <h:message for="room" style="color:#f00" />
+
+
+        </h:panelGrid>
+        <p:commandButton value="Сохранить" ajax="false" actionListener="#{scheduleService.addScheduleRecord(room, teacher, group, lessonDate)}" action="successSchedule" />
+    </h:form>
+
+</h:body>
+</html>
