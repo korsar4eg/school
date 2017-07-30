@@ -1,9 +1,11 @@
 package org.university.services;
 
+import org.hibernate.Transaction;
 import org.university.entites.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,6 +34,9 @@ public class University implements Serializable {
     @ManagedProperty(value = "#{roomsService}")
     private RoomsService roomsService;
 
+    @ManagedProperty(value = "#{sessionService}")
+    private SessionService sessionService;
+
 
     @PostConstruct
     public void init()
@@ -45,7 +50,7 @@ public class University implements Serializable {
 
     public List<Lesson> getLessons() {
 
-        return lessons;
+        return lessonsService.createLessons();
     }
 
     public void setLessons(List<Lesson> lessons) {
@@ -127,7 +132,11 @@ public class University implements Serializable {
 
     public String addLesson(Lesson lesson)
     {
-        lessons.add(lesson);
+        Transaction transaction = sessionService.getSession().beginTransaction();
+//        lessons.add(lesson);
+        sessionService.getSession().save(lesson);
+        transaction.commit();
+
         return "success";
     }
 
@@ -249,4 +258,12 @@ public class University implements Serializable {
         this.schedule = schedule;
     }
 
+
+    public SessionService getSessionService() {
+        return sessionService;
+    }
+
+    public void setSessionService(SessionService sessionService) {
+        this.sessionService = sessionService;
+    }
 }

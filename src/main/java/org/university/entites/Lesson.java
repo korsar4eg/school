@@ -2,13 +2,23 @@ package org.university.entites;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 @ManagedBean
 @RequestScoped
+@Entity
+@Table(name = "lessons")
+@Transactional
 public class Lesson implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column
     private int code;
+
+    @Column(name = "title")
     private String title;
 
 
