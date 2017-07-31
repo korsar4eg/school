@@ -17,9 +17,9 @@
         <p:button outcome="addGroup" value="Добавить группу" icon="ui-icon-plus"/>
         <p:button outcome="addStudentToGroup" value="Добавить студентов в группу" icon="ui-icon-plus"/>
 
-        <h:form>
-            <p:dataTable var="groups" value="#{university.groups}"  sortBy="#{groups.id}" editable="true">
-
+        <h:form id="form">
+            <p:dataTable id="dataTable" widgetVar="dataTable" var="groups" value="#{university.groups}"  sortBy="#{groups.id}" editable="true">
+                <p:ajax event="rowEdit" process="@this" listener="#{university.edit}"   update=":form:dataTable" />
                 <p:column style="width:16px">
                     <p:rowToggler />
                 </p:column>
@@ -76,14 +76,14 @@
                             <h:outputText value="#{student.address}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton ajax="false" outcome="deleteTeacher" actionListener="#{university.deleteStudentFromGroup(groups.id, student.id)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
+                            <p:commandButton ajax="false" outcome="deleteTeacher" actionListener="#{university.deleteStudentFromGroup(student.id)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
                         </p:column>
                     </p:dataTable>
                 </p:rowExpansion>
 
                 <p:column>
                     <p:rowEditor style="width:30px; display: block; float: left;"/>
-                    <p:commandButton ajax="false" outcome="deleteGroup" actionListener="#{university.deleteGroup(groups.id)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
+                    <p:commandButton ajax="false" outcome="deleteGroup" actionListener="#{university.delete(groups)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
                 </p:column>
             </p:dataTable>
         </h:form>

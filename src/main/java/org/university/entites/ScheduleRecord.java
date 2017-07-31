@@ -2,17 +2,27 @@ package org.university.entites;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
-
 @ManagedBean(name = "scheduleRecord")
 @RequestScoped
+@Entity
+@Table(name = "schedule_records")
+@Transactional
 public class ScheduleRecord implements Serializable {
 
+
+    private int id;
+
     private Room room;
+
     private Group group;
+
     private Teacher teacher;
+
     private Date lessonDate;
 
     public ScheduleRecord()
@@ -27,7 +37,19 @@ public class ScheduleRecord implements Serializable {
         this.teacher = teacher;
         this.lessonDate = lessonDate;
     }
+    @Id
+    @Column
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @ManyToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name = "roomId")
     public Room getRoom() {
         return room;
     }
@@ -36,6 +58,8 @@ public class ScheduleRecord implements Serializable {
         this.room = room;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupId")
     public Group getGroup() {
         return group;
     }
@@ -44,6 +68,8 @@ public class ScheduleRecord implements Serializable {
         this.group = group;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacherId")
     public Teacher getTeacher() {
         return teacher;
     }
@@ -52,6 +78,7 @@ public class ScheduleRecord implements Serializable {
         this.teacher = teacher;
     }
 
+    @Column(name = "lessondate")
     public Date getLessonDate() {
         return lessonDate;
     }

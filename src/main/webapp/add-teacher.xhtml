@@ -15,11 +15,11 @@
     <h:form>
         <h:panelGrid columns="3" cellpadding="5" styleClass="ui-grid">
 
-            <h:outputLabel for="id" value="id: " />
-            <p:spinner id="id" value="#{teacher.id}"  >
-                <f:validator validatorId="codeValidator"/>
-            </p:spinner>
-            <h:message for="id" style="color:#f00" />
+            <!--<h:outputLabel for="id" value="id: " />-->
+            <!--<p:spinner id="id" value="#{teacher.id}"  >-->
+                <!--<f:validator validatorId="codeValidator"/>-->
+            <!--</p:spinner>-->
+            <!--<h:message for="id" style="color:#f00" />-->
 
 
             <h:outputLabel for="firstName" value="Имя: " />
@@ -65,7 +65,7 @@
 
 
         </h:panelGrid>
-        <p:commandButton value="Сохранить" ajax="false" actionListener="#{university.addTeacher(teacher)}" action="successTeacher"/>
+        <p:commandButton value="Сохранить" ajax="false" actionListener="#{university.add(teacher)}" action="successTeacher"/>
     </h:form>
 
 </h:body>

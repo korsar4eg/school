@@ -13,27 +13,38 @@ import java.util.List;
 @ApplicationScoped
 public class GroupService {
 
-    @ManagedProperty(value = "#{personsService}")
-    public PersonsService personsService;
+//    @ManagedProperty(value = "#{personsService}")
+//    public PersonsService personsService;
+
+    @ManagedProperty(value = "#{sessionService}")
+    private SessionService sessionService;
 
     public List<Group> createGroups()
     {
-        List<Group> groups = new ArrayList<Group>();
+//        List<Group> groups = new ArrayList<Group>();
+//
+//        groups.add(new Group(1, "group 1", new Date(2017, 0, 0), personsService.createStudents()));
+//        groups.add(new Group(2, "group 2", new Date(2017, 0, 0), personsService.createStudents()));
+//        groups.add(new Group(3, "group 3", new Date(2017, 0, 0), personsService.createStudents()));
+//        groups.add(new Group(4, "group 4", new Date(2017, 0, 0), personsService.createStudents()));
+//        groups.add(new Group(5, "group 5", new Date(2017, 0, 0), personsService.createStudents()));
 
-        groups.add(new Group(1, "group 1", new Date(2017, 0, 0), personsService.createStudents()));
-        groups.add(new Group(2, "group 2", new Date(2017, 0, 0), personsService.createStudents()));
-        groups.add(new Group(3, "group 3", new Date(2017, 0, 0), personsService.createStudents()));
-        groups.add(new Group(4, "group 4", new Date(2017, 0, 0), personsService.createStudents()));
-        groups.add(new Group(5, "group 5", new Date(2017, 0, 0), personsService.createStudents()));
-
-        return groups;
+        return sessionService.getSession().createCriteria(Group.class).list();
     }
 
-    public PersonsService getPersonsService() {
-        return personsService;
+//    public PersonsService getPersonsService() {
+//        return personsService;
+//    }
+//
+//    public void setPersonsService(PersonsService personsService) {
+//        this.personsService = personsService;
+//    }
+
+    public SessionService getSessionService() {
+        return sessionService;
     }
 
-    public void setPersonsService(PersonsService personsService) {
-        this.personsService = personsService;
+    public void setSessionService(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 }

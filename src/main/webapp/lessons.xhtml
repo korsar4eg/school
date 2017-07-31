@@ -16,8 +16,12 @@
 
         <p:button outcome="addLesson" value="Добавить предмет" icon="ui-icon-plus"/>
 
-        <h:form>
-            <p:dataTable var="lessons" value="#{university.lessons}"  sortBy="#{lessons.code}" editable="true" widgetVar="dtLessons">
+        <h:form id="form">
+            <p:dataTable id="dataTable" var="lessons" value="#{university.lessons}"  sortBy="#{lessons.code}" editable="true" widgetVar="dataTable">
+
+                <p:ajax event="rowEdit" process="@this" listener="#{university.edit}"   update=":form:dataTable" />
+                <!--<p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:msgs" />-->
+
                 <p:column sortBy="#{lessons.code}" headerText="Code">
                     <p:cellEditor>
                         <f:facet name="output">

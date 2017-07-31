@@ -1,5 +1,6 @@
 package org.university.services;
 
+import org.hibernate.Transaction;
 import org.university.entites.*;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,9 @@ public class ScheduleService {
 
     private Schedule schedule;
 
+    @ManagedProperty(value = "#{sessionService}")
+    private SessionService sessionService;
+
     private List<ScheduleRecord> resultRecords;
 
 
@@ -32,36 +36,7 @@ public class ScheduleService {
 
     public Schedule createSchedule()
     {
-        List<ScheduleRecord> list = new ArrayList<ScheduleRecord>();
-        List<Room> rooms = university.getRooms();
-        List<Group> groups = university.getGroups();
-        List<Person> teachers = university.getTeachers();
-
-        long startDate = 1499381985L;
-        int i = 0;
-        int j = 0;
-        int k = 0;
-
-        for (int index = 0; index < 60; index++, i++, j++, k++){
-
-            if (i > rooms.size() - 1){
-                i = 0;
-            }
-
-            if (j > groups.size() - 1){
-                j = 0;
-            }
-
-            if (k > teachers.size() - 1){
-                k = 0;
-            }
-            startDate += index * 24 * 3600;
-            list.add(new ScheduleRecord(rooms.get(i), groups.get(j), (Teacher) teachers.get(k), new Date(startDate * 1000)));
-
-        }
-
-        return new Schedule(list);
-
+        return new Schedule(sessionService.getSession().createCriteria(ScheduleRecord.class).list());
     }
 
     public University getUniversity() {
@@ -106,9 +81,17 @@ public class ScheduleService {
 
     public void addScheduleRecord(Room room, Teacher teacher, Group group, Date lessonDate)
     {
-        List<ScheduleRecord> records =  schedule.getScheduleRecords();
-        records.add(new ScheduleRecord(room , group, teacher, lessonDate));
-        schedule.setScheduleRecords(records);
-        university.setSchedule(schedule);
+        ScheduleRecord scheduleRecord = new ScheduleRecord(room, group, teacher, lessonDate);
+        Transaction tx = sessionService.getSession().beginTransaction();
+        sessionService.getSession().save(scheduleRecord);
+        tx.commit();
+    }
+
+    public SessionService getSessionService() {
+        return sessionService;
+    }
+
+    public void setSessionService(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 }

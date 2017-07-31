@@ -5,6 +5,7 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 @ManagedBean
 @RequestScoped
@@ -13,13 +14,13 @@ import java.io.Serializable;
 @Transactional
 public class Lesson implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column
+
     private int code;
 
-    @Column(name = "title")
+
     private String title;
+
+    private List<Teacher> teacher;
 
 
     public Lesson()
@@ -27,13 +28,16 @@ public class Lesson implements Serializable {
 
     }
 
-    public Lesson(int code, String title)
+    public Lesson(int code, String title, List<Teacher> teacher)
     {
         this.code = code;
         this.title = title;
+        this.teacher = teacher;
     }
 
-
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column
     public int getCode() {
         return code;
     }
@@ -42,11 +46,22 @@ public class Lesson implements Serializable {
         this.code = code;
     }
 
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
+//    @JoinColumn(name = "code")
+    public List<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(List<Teacher> teacher) {
+        this.teacher = teacher;
     }
 }

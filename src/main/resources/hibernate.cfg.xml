@@ -23,5 +23,11 @@
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
         <mapping class="org.university.entites.Lesson"/>
+        <mapping class="org.university.entites.Group"/>
+        <mapping class="org.university.entites.Room"/>
+        <mapping class="org.university.entites.ScheduleRecord"/>
+        <mapping class="org.university.entites.Student"/>
+        <mapping class="org.university.entites.Teacher"/>
+        <mapping class="org.university.entites.Person"/>
     </session-factory>
 </hibernate-configuration>

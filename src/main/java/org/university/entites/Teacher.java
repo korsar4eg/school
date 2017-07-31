@@ -3,22 +3,41 @@ package org.university.entites;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @ManagedBean
 @RequestScoped
+
+@Entity
+@Table(name = "teachers")
+@Transactional
 public class Teacher implements Serializable, Person {
 
+
     private int id;
+
     private String firstName;
+
     private String lastName;
+
     private String middleName;
+
     private Date dateOfBirth;
+
     private String address;
+
     private Lesson lesson;
+
     private String position;
+//
+//    private int code;
+
+    private List<ScheduleRecord> scheduleRecord;
 
 
     public Teacher()
@@ -36,9 +55,12 @@ public class Teacher implements Serializable, Person {
         this.address = address;
         this.lesson = lesson;
         this.position = position;
+//        this.code = code;
     }
 
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column
     public int getId() {
         return id;
     }
@@ -47,6 +69,7 @@ public class Teacher implements Serializable, Person {
         this.id = id;
     }
 
+    @Column(name = "firstName")
     public String getFirstName() {
         return firstName;
     }
@@ -55,6 +78,7 @@ public class Teacher implements Serializable, Person {
         this.firstName = firstName;
     }
 
+    @Column(name = "lastName")
     public String getLastName() {
         return lastName;
     }
@@ -63,6 +87,7 @@ public class Teacher implements Serializable, Person {
         this.lastName = lastName;
     }
 
+    @Column(name = "middleName")
     public String getMiddleName() {
         return middleName;
     }
@@ -71,6 +96,8 @@ public class Teacher implements Serializable, Person {
         this.middleName = middleName;
     }
 
+    @Column(name = "dateOfBirth")
+  //  @Temporal(javax.persistence.TemporalType.DATE)
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -79,6 +106,7 @@ public class Teacher implements Serializable, Person {
         this.dateOfBirth = dateOfBirth;
     }
 
+    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -87,6 +115,8 @@ public class Teacher implements Serializable, Person {
         this.address = address;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "code")
     public Lesson getLesson() {
         return lesson;
     }
@@ -95,6 +125,7 @@ public class Teacher implements Serializable, Person {
         this.lesson = lesson;
     }
 
+    @Column(name = "position")
     public String getPosition() {
         return position;
     }
@@ -102,4 +133,14 @@ public class Teacher implements Serializable, Person {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+    public List<ScheduleRecord> getScheduleRecord() {
+        return scheduleRecord;
+    }
+
+    public void setScheduleRecord(List<ScheduleRecord> scheduleRecord) {
+        this.scheduleRecord = scheduleRecord;
+    }
+
 }

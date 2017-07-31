@@ -1,5 +1,8 @@
 package org.university.services;
 
+import org.apache.tinkerpop.gremlin.structure.T;
+import org.hibernate.Transaction;
+import org.primefaces.event.RowEditEvent;
 import org.university.entites.Lesson;
 
 import javax.faces.bean.ApplicationScoped;
@@ -17,14 +20,8 @@ public class LessonsService {
 
     public List<Lesson> createLessons()
     {
-//        List<Lesson> lessons = ;
-//        lessons.add(new Lesson(1, "mathematics"));
-//        lessons.add(new Lesson(2, "physics"));
-//        lessons.add(new Lesson(3, "english"));
-//        lessons.add(new Lesson(4, "history"));
         return  sessionService.getSession().createCriteria(Lesson.class).list();
     }
-
 
     public SessionService getSessionService() {
         return sessionService;

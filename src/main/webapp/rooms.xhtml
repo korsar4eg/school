@@ -16,8 +16,9 @@
 
         <p:button outcome="addRoom" value="Добавить аудиторию" icon="ui-icon-plus"/>
 
-        <h:form>
-            <p:dataTable var="rooms" value="#{university.rooms}"  sortBy="#{rooms.id}" editable="true" widgetVar="dtrooms">
+        <h:form id="form">
+            <p:dataTable id="dataTable" var="rooms" value="#{university.rooms}"  sortBy="#{rooms.id}" editable="true" widgetVar="dataTable">
+                <p:ajax event="rowEdit" process="@this" listener="#{university.edit}"   update=":form:dataTable" />
                 <p:column sortBy="#{rooms.id}" headerText="#">
                     <p:cellEditor>
                         <f:facet name="output">
@@ -40,7 +41,7 @@
                 </p:column>
                 <p:column>
                     <p:rowEditor style="width:30px; display: block; float: left;"/>
-                    <p:commandButton ajax="false" outcome="deleteRoom" actionListener="#{university.deleteRoom(rooms.id)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
+                    <p:commandButton ajax="false" outcome="deleteRoom" actionListener="#{university.delete(rooms)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
                 </p:column>
             </p:dataTable>
         </h:form>

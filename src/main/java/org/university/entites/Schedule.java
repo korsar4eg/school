@@ -55,31 +55,43 @@ public class Schedule implements Serializable{
 
     public List<ScheduleRecord> buildByDate(Person person, Date startDate, Date finishDate)
     {
-        List<ScheduleRecord> result = new ArrayList<ScheduleRecord>();
-        for (ScheduleRecord record: scheduleRecords){
 
-            if (record.getLessonDate().getTime() >= startDate.getTime() && record.getLessonDate().getTime() <= finishDate.getTime())
-            {
-                if ((person instanceof Teacher) && record.getTeacher().getId() == person.getId())
-                {
-                    result.add(record);
-                }
+        StringBuilder query = new StringBuilder("from ScheduleRecord ");
 
-                if (person instanceof Student){
-                   List<Person> students = record.getGroup().getStudents();
-                   for (Person student: students){
-                       if (student.getId() == person.getId()){
-                           result.add(record);
-                       }
-                   }
-                }
+        query.append(" where lessonDate >= " + startDate + " and lessonDate <= " + finishDate);
 
-            }
+        if (person instanceof Student){
+            query.append(" teacher.id =  " + person.getId());
+        }
+        else {
+            //query.append(" groupid.students.id  in  " + person.getId());
         }
 
-        Collections.sort(result, ScheduleRecord.COMPARE_BY_DATE);
+//        List<ScheduleRecord> result = new ArrayList<ScheduleRecord>();
+//        for (ScheduleRecord record: scheduleRecords){
+//
+//            if (record.getLessonDate().getTime() >= startDate.getTime() && record.getLessonDate().getTime() <= finishDate.getTime())
+//            {
+//                if ((person instanceof Teacher) && record.getTeacher().getId() == person.getId())
+//                {
+//                    result.add(record);
+//                }
+//
+//                if (person instanceof Student){
+//                   List<Person> students = record.getGroup().getStudents();
+//                   for (Person student: students){
+//                       if (student.getId() == person.getId()){
+//                           result.add(record);
+//                       }
+//                   }
+//                }
+//
+//            }
+//        }
+//
+//        Collections.sort(result, ScheduleRecord.COMPARE_BY_DATE);
 
-        return result;
+        return null;
     }
 
     public List<ScheduleRecord> buildFullMonth()

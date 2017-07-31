@@ -1,10 +1,15 @@
 package org.university.services;
 
+import org.apache.tinkerpop.gremlin.structure.T;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import org.university.entites.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
@@ -41,7 +46,7 @@ public class University implements Serializable {
     @PostConstruct
     public void init()
     {
-        lessons = lessonsService.createLessons();
+      //  lessons = lessonsService.createLessons();
         teachers = personsService.createTeachers();
         students = personsService.createStudents();
         groups = groupService.createGroups();
@@ -53,9 +58,9 @@ public class University implements Serializable {
         return lessonsService.createLessons();
     }
 
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
+   // public void setLessons(List<Lesson> lessons) {
+//        this.lessons = lessons;
+//    }
 
     public void setLessonsService(LessonsService service) {
         this.lessonsService = service;
@@ -109,36 +114,16 @@ public class University implements Serializable {
         }
     }
 
-    public void deleteStudentFromGroup(int groupId, int studentId)
+    public void deleteStudentFromGroup(int studentId)
     {
-       for (int i = 0; i < groups.size(); i++){
-            if (groups.get(i).getId() == groupId){
-                Group group = groups.get(i);
-                List<Person> students = group.getStudents();
-                for (int j = 0; j < students.size(); j++){
-                    if (students.get(j).getId() == studentId){
-                        students.remove(j);
-                        groups.remove(i);
-                        group.setStudents(students);
-                        groups.add(group);
-                        break;
-                    }
-                }
-
-                return;
-            }
-        }
+        Session session = sessionService.getSession();
+        Student student = (Student) session.get(Student.class, studentId);
+        student.setGroup(null);
+        Transaction tx = session.beginTransaction();
+        session.update(student);
+        tx.commit();
     }
 
-    public String addLesson(Lesson lesson)
-    {
-        Transaction transaction = sessionService.getSession().beginTransaction();
-//        lessons.add(lesson);
-        sessionService.getSession().save(lesson);
-        transaction.commit();
-
-        return "success";
-    }
 
     public void addRoom(Room room)
     {
@@ -156,29 +141,10 @@ public class University implements Serializable {
     public String addStudentToGroup(Group group, Student student)
     {
 
-        int groupId = group.getId();
-        int studentId = student.getId();
-
-        for (int i = 0; i < groups.size(); i++){
-
-            if (groups.get(i).getId() == groupId){
-                Group groupTmp = groups.get(i);
-                List<Person> students = groupTmp.getStudents();
-                Person studentItem = null;
-                for (int j = 0; j < students.size(); j++){
-                    if (students.get(j).getId() == studentId){
-                        studentItem = students.get(i);
-                        break;
-                    }
-                }
-                students.add(studentItem);
-                groupTmp.setStudents(students);
-                groups.remove(i);
-                groups.add(groupTmp);
-                break;
-            }
-
-        }
+        student.setGroup(group);
+        Transaction tx = sessionService.getSession().beginTransaction();
+        sessionService.getSession().update(student);
+        tx.commit();
         return "successGroupsToStudents";
     }
 
@@ -203,7 +169,7 @@ public class University implements Serializable {
     }
 
     public List<Person> getTeachers() {
-        return teachers;
+        return personsService.createTeachers();
     }
 
     public void setTeachers(List<Person> teachers) {
@@ -211,7 +177,7 @@ public class University implements Serializable {
     }
 
     public List<Person> getStudents() {
-        return students;
+        return personsService.createStudents();
     }
 
     public void setStudents(List<Person> students) {
@@ -227,7 +193,7 @@ public class University implements Serializable {
     }
 
     public List<Group> getGroups() {
-        return groups;
+        return groupService.createGroups();
     }
 
     public void setGroups(List<Group> groups) {
@@ -243,7 +209,7 @@ public class University implements Serializable {
     }
 
     public List<Room> getRooms() {
-        return rooms;
+        return roomsService.createRooms();
     }
 
     public void setRooms(List<Room> rooms) {
@@ -266,4 +232,41 @@ public class University implements Serializable {
     public void setSessionService(SessionService sessionService) {
         this.sessionService = sessionService;
     }
+
+    //new updates
+    public String add(Object entity) {
+        Transaction tx = sessionService.getSession().beginTransaction();
+        sessionService.getSession().save(entity);
+        tx.commit();
+        if (entity instanceof Lesson){
+            return "success";
+        }
+        else if (entity instanceof Group){
+            return "successGroups";
+        }
+        else if (entity instanceof Person){
+            return "successTeacher";
+        }
+        else if (entity instanceof Room){
+            return "successRooms";
+        }
+        else return "success";
+
+    }
+
+
+    public void edit(RowEditEvent entity) {
+            Transaction tx = sessionService.getSession().beginTransaction();
+            sessionService.getSession().update(entity.getObject());
+            tx.commit();
+            RequestContext.getCurrentInstance().execute("PF('dataTable').filter()");
+    }
+
+    public void delete(Object entity) {
+        Transaction tx = sessionService.getSession().beginTransaction();
+        sessionService.getSession().delete(entity);
+        tx.commit();
+    }
+
+
 }
