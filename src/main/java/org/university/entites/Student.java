@@ -102,7 +102,8 @@ public class Student implements Serializable, Person {
         this.address = address;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade =
+            {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "groupId")
     public Group getGroup() {
         return group;

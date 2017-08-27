@@ -44,7 +44,7 @@
                 </p:column>
                 <p:column>
                     <p:rowEditor style="width:30px; display: block; float: left;"/>
-                    <p:commandButton ajax="false" outcome="deleteLesson" actionListener="#{university.deleteLesson(lessons.code)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
+                    <p:commandButton ajax="false" outcome="deleteLesson" actionListener="#{university.delete(lessons)}"  value="" icon="ui-icon-close" style="width: 35px; height: 25px; text-align: center; display: block; float: left"/>
                 </p:column>
             </p:dataTable>
         </h:form>

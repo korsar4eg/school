@@ -70,49 +70,7 @@ public class University implements Serializable {
         this.personsService = service;
     }
 
-    public String addTeacher(Person teacher)
-    {
-        teachers.add(teacher);
-        return "successTeacher";
-    }
 
-    public String addStudent(Person student)
-    {
-        students.add(student);
-        return "successTeacher";
-    }
-
-    private List<Person> deletePerson(int id, List<Person> persons)
-    {
-        for (Person person: persons){
-            if (person.getId() == id){
-                persons.remove(person);
-                return persons;
-            }
-        }
-
-        return persons;
-    }
-
-    public void deleteTeacher(int id)
-    {
-        teachers = deletePerson(id, teachers);
-    }
-
-    public void deleteStudent(int id)
-    {
-        students = deletePerson(id, students);
-    }
-
-    public void deleteGroup(int id)
-    {
-        for (Group group: groups){
-            if (group.getId() == id){
-                groups.remove(group);
-                return;
-            }
-        }
-    }
 
     public void deleteStudentFromGroup(int studentId)
     {
@@ -124,17 +82,6 @@ public class University implements Serializable {
         tx.commit();
     }
 
-
-    public void addRoom(Room room)
-    {
-        rooms.add(room);
-    }
-
-    public String addGroup(Group group)
-    {
-        groups.add(group);
-        return "successGroups";
-    }
 
 
 
@@ -148,25 +95,6 @@ public class University implements Serializable {
         return "successGroupsToStudents";
     }
 
-    public void deleteLesson(int code)
-    {
-       for (Lesson lesson: lessons){
-           if (lesson.getCode() == code){
-               lessons.remove(lesson);
-               return;
-           }
-       }
-    }
-
-    public void deleteRoom(String code)
-    {
-        for (Room room: rooms){
-            if (room.getId().equals(code)){
-                rooms.remove(room);
-                return;
-            }
-        }
-    }
 
     public List<Person> getTeachers() {
         return personsService.createTeachers();
@@ -244,8 +172,11 @@ public class University implements Serializable {
         else if (entity instanceof Group){
             return "successGroups";
         }
-        else if (entity instanceof Person){
+        else if (entity instanceof Teacher){
             return "successTeacher";
+        }
+        else if (entity instanceof Student){
+            return "successStudent";
         }
         else if (entity instanceof Room){
             return "successRooms";

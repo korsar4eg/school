@@ -36,7 +36,9 @@ public class ScheduleService {
 
     public Schedule createSchedule()
     {
-        return new Schedule(sessionService.getSession().createCriteria(ScheduleRecord.class).list());
+        Schedule schedule =  new Schedule(sessionService.getSession().createCriteria(ScheduleRecord.class).list());
+        schedule.setSessionService(sessionService);
+        return schedule;
     }
 
     public University getUniversity() {

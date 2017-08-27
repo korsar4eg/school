@@ -1,7 +1,15 @@
 package org.university.entites;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.university.services.SessionService;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.*;
 
@@ -11,6 +19,8 @@ public class Schedule implements Serializable{
 
     private List<ScheduleRecord> scheduleRecords;
 
+    @ManagedProperty(value = "#{sessionService}")
+    private SessionService sessionService;
 
     public Schedule(){}
 
@@ -21,77 +31,48 @@ public class Schedule implements Serializable{
 
     public List<ScheduleRecord> buildByDate(Date startDate)
     {
-        List<ScheduleRecord> result = new ArrayList<ScheduleRecord>();
-        for (ScheduleRecord record: scheduleRecords){
+        Criteria criteria = sessionService.getSession().createCriteria(ScheduleRecord.class);
+        criteria.add(Restrictions.ge("lessonDate", startDate));
+        criteria.addOrder(Order.asc("lessonDate"));
 
-            if (record.getLessonDate().getTime() == startDate.getTime()){
-                result.add(record);
-            }
-        }
-
-        Collections.sort(result, ScheduleRecord.COMPARE_BY_DATE);
-
-        return result;
+        return (List<ScheduleRecord>) criteria.list();
     }
 
     public List<ScheduleRecord> buildByDate(Date startDate, Date finishDate)
     {
-        List<ScheduleRecord> result = new ArrayList<ScheduleRecord>();
-        for (ScheduleRecord record: scheduleRecords){
+        Criteria criteria = sessionService.getSession().createCriteria(ScheduleRecord.class);
+        criteria.add(Restrictions.ge("lessonDate", startDate));
+        criteria.addOrder(Order.asc("lessonDate"));
+        criteria.add(Restrictions.le("lessonDate", finishDate));
 
-            if (
-                    record.getLessonDate().getTime() >= startDate.getTime()
-                    && record.getLessonDate().getTime() <= finishDate.getTime()
-                )
-            {
-                result.add(record);
-            }
-        }
-
-        Collections.sort(result, ScheduleRecord.COMPARE_BY_DATE);
-
-        return result;
+        return (List<ScheduleRecord>) criteria.list();
     }
 
     public List<ScheduleRecord> buildByDate(Person person, Date startDate, Date finishDate)
     {
+        Criteria criteria = sessionService.getSession().createCriteria(ScheduleRecord.class);
 
-        StringBuilder query = new StringBuilder("from ScheduleRecord ");
+        criteria.add(Restrictions.ge("lessonDate", startDate));
+        criteria.add(Restrictions.le("lessonDate", finishDate));
 
-        query.append(" where lessonDate >= " + startDate + " and lessonDate <= " + finishDate);
-
-        if (person instanceof Student){
-            query.append(" teacher.id =  " + person.getId());
+        if (person instanceof Teacher){
+            criteria.add(Restrictions.eq("teacher.id", person.getId()));
         }
         else {
-            //query.append(" groupid.students.id  in  " + person.getId());
+
+            //okay here is another query to detect user group id, and i know that it could be done with one query
+            Criteria studentCriteria = sessionService.getSession().createCriteria(Student.class);
+            studentCriteria.add(Restrictions.eq("id", person.getId()));
+
+            Student student = (Student) studentCriteria.uniqueResult();
+            System.out.println(student.getGroup());
+            criteria.add(Restrictions.eq("group.id", student.getGroup().getId()));
+            //criteria.add(Restrictions.eq("group.students.id", person.getId()));
         }
 
-//        List<ScheduleRecord> result = new ArrayList<ScheduleRecord>();
-//        for (ScheduleRecord record: scheduleRecords){
-//
-//            if (record.getLessonDate().getTime() >= startDate.getTime() && record.getLessonDate().getTime() <= finishDate.getTime())
-//            {
-//                if ((person instanceof Teacher) && record.getTeacher().getId() == person.getId())
-//                {
-//                    result.add(record);
-//                }
-//
-//                if (person instanceof Student){
-//                   List<Person> students = record.getGroup().getStudents();
-//                   for (Person student: students){
-//                       if (student.getId() == person.getId()){
-//                           result.add(record);
-//                       }
-//                   }
-//                }
-//
-//            }
-//        }
-//
-//        Collections.sort(result, ScheduleRecord.COMPARE_BY_DATE);
+        criteria.addOrder(Order.asc("lessonDate"));
 
-        return null;
+        return (List<ScheduleRecord>) criteria.list();
     }
 
     public List<ScheduleRecord> buildFullMonth()
@@ -125,4 +106,14 @@ public class Schedule implements Serializable{
     public void setScheduleRecords(List<ScheduleRecord> scheduleRecords) {
         this.scheduleRecords = scheduleRecords;
     }
+
+    public SessionService getSessionService() {
+        return sessionService;
+    }
+
+    public void setSessionService(SessionService sessionService) {
+        this.sessionService = sessionService;
+    }
 }
+
+

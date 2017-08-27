@@ -151,7 +151,7 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>add-group.xhtml</from-view-id>
+        <from-view-id>add-groups.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>successGroups</from-outcome>
             <to-view-id>groups.xhtml</to-view-id>
