@@ -49,7 +49,7 @@ public class ScheduleService {
         this.university = university;
     }
 
-    public void buildTeacherSchedule(Date startDate, Date finishDate, Boolean isMonth, Teacher teacher)
+    public List<ScheduleRecord> buildTeacherSchedule(Date startDate, Date finishDate, Boolean isMonth, Teacher teacher)
     {
         if (isMonth){
             resultRecords = schedule.buildTeacherMonthSchedule(teacher, startDate);
@@ -59,6 +59,7 @@ public class ScheduleService {
         }
 
         System.out.println("count " + resultRecords.size());
+        return  resultRecords;
     }
 
     public void buildStudentSchedule(Date startDate, Date finishDate, Boolean isMonth, Student student)

@@ -59,7 +59,8 @@ public class ScheduleRecord implements Serializable {
         this.room = room;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade =
+            {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "groupId")
     public Group getGroup() {
         return group;

@@ -17,6 +17,12 @@ public class SessionService {
 
     private Session session;
 
+
+
+    public SessionService(){}
+
+
+
     @PostConstruct
     public void init()
     {
