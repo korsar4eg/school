@@ -22,13 +22,13 @@ public class StudentsConverter implements Converter{
     private University university;
 
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        List<Person> students  = university.getStudents();
-
-        for (Person student: students){
-            if (student.getId() == Integer.parseInt(value)){
-                return student;
-            }
-        }
+//        List<Person> students  = university.getStudents();
+//
+//        for (Person student: students){
+//            if (student.getId() == Integer.parseInt(value)){
+//                return student;
+//            }
+//        }
 
         return null;
     }

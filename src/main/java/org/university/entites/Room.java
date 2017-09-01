@@ -12,6 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "rooms")
 @Transactional
+@NamedQueries({
+        @NamedQuery(name = "getAllRooms", query = "select r from Room r")
+})
 public class Room implements Serializable{
 
 

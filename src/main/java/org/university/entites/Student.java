@@ -14,6 +14,9 @@ import java.util.Date;
 @Entity
 @Table(name = "students")
 @Transactional
+@NamedQueries({
+        @NamedQuery(name = "getAllStudents", query = "select s from Student s")
+})
 public class Student implements Serializable, Person {
 
 

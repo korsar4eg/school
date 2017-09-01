@@ -23,14 +23,14 @@ public class TeachersConverter implements Converter{
     private University university;
 
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        List<Person> teachers  = university.getTeachers();
-
-        for (Person teacher: teachers){
-            if (teacher.getId() == Integer.parseInt(value)){
-                return teacher;
-            }
-        }
-
+//        List<Person> teachers  = university.getTeachers();
+//
+//        for (Person teacher: teachers){
+//            if (teacher.getId() == Integer.parseInt(value)){
+//                return teacher;
+//            }
+//        }
+//
         return null;
     }
 

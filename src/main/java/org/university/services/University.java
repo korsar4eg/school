@@ -8,6 +8,7 @@ import org.primefaces.event.RowEditEvent;
 import org.university.entites.*;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.transaction.Transactional;
@@ -27,26 +28,26 @@ public class University implements Serializable {
 
     private List<ScheduleRecord> resultRecords;
 
-    @ManagedProperty(value = "#{lessonsService}")
+    @EJB
     private LessonsService lessonsService;
 
-    @ManagedProperty(value = "#{personsService}")
+    @EJB
     private PersonsService personsService;
 
-    @ManagedProperty(value = "#{groupService}")
+    @EJB
     private GroupService groupService;
 
-    @ManagedProperty(value = "#{roomsService}")
+    @EJB
     private RoomsService roomsService;
-
-    @ManagedProperty(value = "#{sessionService}")
-    private SessionService sessionService;
+//
+//    @ManagedProperty(value = "#{sessionService}")
+//    private SessionService sessionService;
 
 
     @PostConstruct
     public void init()
     {
-      //  lessons = lessonsService.createLessons();
+        lessons = lessonsService.createLessons();
         teachers = personsService.createTeachers();
         students = personsService.createStudents();
         groups = groupService.createGroups();
@@ -62,24 +63,24 @@ public class University implements Serializable {
 //        this.lessons = lessons;
 //    }
 
-    public void setLessonsService(LessonsService service) {
-        this.lessonsService = service;
-    }
+//    public void setLessonsService(LessonsService service) {
+//        this.lessonsService = service;
+//    }
 
-    public void setPersonsService(PersonsService service) {
-        this.personsService = service;
-    }
+//    public void setPersonsService(PersonsService service) {
+//        this.personsService = service;
+//    }
 
 
 
     public void deleteStudentFromGroup(int studentId)
     {
-        Session session = sessionService.getSession();
-        Student student = (Student) session.get(Student.class, studentId);
-        student.setGroup(null);
-        Transaction tx = session.beginTransaction();
-        session.update(student);
-        tx.commit();
+//        Session session = sessionService.getSession();
+//        Student student = (Student) session.get(Student.class, studentId);
+//        student.setGroup(null);
+//        Transaction tx = session.beginTransaction();
+//        session.update(student);
+//        tx.commit();
     }
 
 
@@ -88,11 +89,12 @@ public class University implements Serializable {
     public String addStudentToGroup(Group group, Student student)
     {
 
-        student.setGroup(group);
-        Transaction tx = sessionService.getSession().beginTransaction();
-        sessionService.getSession().update(student);
-        tx.commit();
+//        student.setGroup(group);
+//        Transaction tx = sessionService.getSession().beginTransaction();
+//        sessionService.getSession().update(student);
+//        tx.commit();
         return "successGroupsToStudents";
+
     }
 
 
@@ -112,13 +114,13 @@ public class University implements Serializable {
         this.students = students;
     }
 
-    public GroupService getGroupService() {
-        return groupService;
-    }
+//    public GroupService getGroupService() {
+//        return groupService;
+//    }
 
-    public void setGroupService(GroupService groupService) {
-        this.groupService = groupService;
-    }
+//    public void setGroupService(GroupService groupService) {
+//        this.groupService = groupService;
+//    }
 
     public List<Group> getGroups() {
         return groupService.createGroups();
@@ -128,13 +130,13 @@ public class University implements Serializable {
         this.groups = groups;
     }
 
-    public RoomsService getRoomsService() {
-        return roomsService;
-    }
+//    public RoomsService getRoomsService() {
+//        return roomsService;
+//    }
 
-    public void setRoomsService(RoomsService roomsService) {
-        this.roomsService = roomsService;
-    }
+//    public void setRoomsService(RoomsService roomsService) {
+//        this.roomsService = roomsService;
+//    }
 
     public List<Room> getRooms() {
         return roomsService.createRooms();
@@ -153,19 +155,19 @@ public class University implements Serializable {
     }
 
 
-    public SessionService getSessionService() {
-        return sessionService;
-    }
+//    public SessionService getSessionService() {
+//        return sessionService;
+//    }
 
-    public void setSessionService(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
+//    public void setSessionService(SessionService sessionService) {
+//        this.sessionService = sessionService;
+//    }
 
     //new updates
     public String add(Object entity) {
-        Transaction tx = sessionService.getSession().beginTransaction();
-        sessionService.getSession().save(entity);
-        tx.commit();
+//        Transaction tx = sessionService.getSession().beginTransaction();
+//        sessionService.getSession().save(entity);
+//        tx.commit();
         if (entity instanceof Lesson){
             return "success";
         }
@@ -187,16 +189,16 @@ public class University implements Serializable {
 
 
     public void edit(RowEditEvent entity) {
-            Transaction tx = sessionService.getSession().beginTransaction();
-            sessionService.getSession().update(entity.getObject());
-            tx.commit();
+//            Transaction tx = sessionService.getSession().beginTransaction();
+//            sessionService.getSession().update(entity.getObject());
+//            tx.commit();
             RequestContext.getCurrentInstance().execute("PF('dataTable').filter()");
     }
 
     public void delete(Object entity) {
-        Transaction tx = sessionService.getSession().beginTransaction();
-        sessionService.getSession().delete(entity);
-        tx.commit();
+//        Transaction tx = sessionService.getSession().beginTransaction();
+//        sessionService.getSession().delete(entity);
+//        tx.commit();
     }
 
 

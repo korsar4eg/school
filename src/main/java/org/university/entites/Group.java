@@ -14,6 +14,9 @@ import java.util.List;
 @Entity
 @Table(name = "groups")
 @Transactional
+@NamedQueries({
+        @NamedQuery(name = "getAllGroups", query = "SELECT g FROM Group g")
+})
 public class Group implements Serializable {
 
 

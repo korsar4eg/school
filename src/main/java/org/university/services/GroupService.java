@@ -2,49 +2,43 @@ package org.university.services;
 
 import org.university.entites.Group;
 
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name = "groupService")
 @ApplicationScoped
+@Stateless
 public class GroupService {
 
-//    @ManagedProperty(value = "#{personsService}")
-//    public PersonsService personsService;
 
-    @ManagedProperty(value = "#{sessionService}")
-    private SessionService sessionService;
+//    @ManagedProperty(value = "#{sessionService}")
+//    private SessionService sessionService;
+    private EntityManagerFactory emf;
+    private EntityManager em;
 
     public List<Group> createGroups()
     {
-//        List<Group> groups = new ArrayList<Group>();
-//
-//        groups.add(new Group(1, "group 1", new Date(2017, 0, 0), personsService.createStudents()));
-//        groups.add(new Group(2, "group 2", new Date(2017, 0, 0), personsService.createStudents()));
-//        groups.add(new Group(3, "group 3", new Date(2017, 0, 0), personsService.createStudents()));
-//        groups.add(new Group(4, "group 4", new Date(2017, 0, 0), personsService.createStudents()));
-//        groups.add(new Group(5, "group 5", new Date(2017, 0, 0), personsService.createStudents()));
 
-        return sessionService.getSession().createCriteria(Group.class).list();
+        //return sessionService.getSession().createCriteria(Group.class).list();
+
+        emf = Persistence.createEntityManagerFactory("pu");
+        em = emf.createEntityManager();
+        return em.createNamedQuery("getAllGroups").getResultList();
     }
 
-//    public PersonsService getPersonsService() {
-//        return personsService;
+//    public SessionService getSessionService() {
+//        return sessionService;
 //    }
 //
-//    public void setPersonsService(PersonsService personsService) {
-//        this.personsService = personsService;
+//    public void setSessionService(SessionService sessionService) {
+//        this.sessionService = sessionService;
 //    }
-
-    public SessionService getSessionService() {
-        return sessionService;
-    }
-
-    public void setSessionService(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
 }
