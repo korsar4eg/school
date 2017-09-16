@@ -59,7 +59,6 @@ public class Lesson implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
-//    @JoinColumn(name = "code")
     public List<Teacher> getTeacher() {
         return teacher;
     }

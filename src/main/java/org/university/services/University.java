@@ -1,8 +1,5 @@
 package org.university.services;
 
-import org.apache.tinkerpop.gremlin.structure.T;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.university.entites.*;
@@ -10,14 +7,13 @@ import org.university.entites.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.*;
-import javax.faces.context.FacesContext;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name = "university")
 @ApplicationScoped
-public class University implements Serializable {
+public class
+University implements Serializable {
 
     private List<Lesson> lessons;
     private List<Person> teachers;
@@ -39,9 +35,6 @@ public class University implements Serializable {
 
     @EJB
     private RoomsService roomsService;
-//
-//    @ManagedProperty(value = "#{sessionService}")
-//    private SessionService sessionService;
 
 
     @PostConstruct
@@ -59,28 +52,14 @@ public class University implements Serializable {
         return lessonsService.createLessons();
     }
 
-   // public void setLessons(List<Lesson> lessons) {
-//        this.lessons = lessons;
-//    }
-
-//    public void setLessonsService(LessonsService service) {
-//        this.lessonsService = service;
-//    }
-
-//    public void setPersonsService(PersonsService service) {
-//        this.personsService = service;
-//    }
-
-
-
     public void deleteStudentFromGroup(int studentId)
     {
-//        Session session = sessionService.getSession();
-//        Student student = (Student) session.get(Student.class, studentId);
-//        student.setGroup(null);
-//        Transaction tx = session.beginTransaction();
-//        session.update(student);
-//        tx.commit();
+
+        Student student = (Student) DBService.getInstance().getEm().find(Student.class, studentId);
+        student.setGroup(null);
+        DBService.getInstance().getEm().getTransaction().begin();
+        DBService.getInstance().getEm().merge(student);
+        DBService.getInstance().getEm().getTransaction().commit();
     }
 
 
@@ -89,10 +68,10 @@ public class University implements Serializable {
     public String addStudentToGroup(Group group, Student student)
     {
 
-//        student.setGroup(group);
-//        Transaction tx = sessionService.getSession().beginTransaction();
-//        sessionService.getSession().update(student);
-//        tx.commit();
+        student.setGroup(group);
+        DBService.getInstance().getEm().getTransaction().begin();
+        DBService.getInstance().getEm().merge(student);
+        DBService.getInstance().getEm().getTransaction().commit();
         return "successGroupsToStudents";
 
     }
@@ -114,13 +93,6 @@ public class University implements Serializable {
         this.students = students;
     }
 
-//    public GroupService getGroupService() {
-//        return groupService;
-//    }
-
-//    public void setGroupService(GroupService groupService) {
-//        this.groupService = groupService;
-//    }
 
     public List<Group> getGroups() {
         return groupService.createGroups();
@@ -130,13 +102,6 @@ public class University implements Serializable {
         this.groups = groups;
     }
 
-//    public RoomsService getRoomsService() {
-//        return roomsService;
-//    }
-
-//    public void setRoomsService(RoomsService roomsService) {
-//        this.roomsService = roomsService;
-//    }
 
     public List<Room> getRooms() {
         return roomsService.createRooms();
@@ -155,19 +120,13 @@ public class University implements Serializable {
     }
 
 
-//    public SessionService getSessionService() {
-//        return sessionService;
-//    }
-
-//    public void setSessionService(SessionService sessionService) {
-//        this.sessionService = sessionService;
-//    }
 
     //new updates
     public String add(Object entity) {
-//        Transaction tx = sessionService.getSession().beginTransaction();
-//        sessionService.getSession().save(entity);
-//        tx.commit();
+        DBService.getInstance().getEm().getTransaction().begin();
+        DBService.getInstance().getEm().persist(entity);
+        DBService.getInstance().getEm().getTransaction().commit();
+
         if (entity instanceof Lesson){
             return "success";
         }
@@ -189,16 +148,17 @@ public class University implements Serializable {
 
 
     public void edit(RowEditEvent entity) {
-//            Transaction tx = sessionService.getSession().beginTransaction();
-//            sessionService.getSession().update(entity.getObject());
-//            tx.commit();
-            RequestContext.getCurrentInstance().execute("PF('dataTable').filter()");
+        DBService.getInstance().getEm().getTransaction().begin();
+        DBService.getInstance().getEm().merge(entity);
+        DBService.getInstance().getEm().getTransaction().commit();
+
+        RequestContext.getCurrentInstance().execute("PF('dataTable').filter()");
     }
 
     public void delete(Object entity) {
-//        Transaction tx = sessionService.getSession().beginTransaction();
-//        sessionService.getSession().delete(entity);
-//        tx.commit();
+        DBService.getInstance().getEm().getTransaction().begin();
+        DBService.getInstance().getEm().remove(entity);
+        DBService.getInstance().getEm().getTransaction().commit();
     }
 
 

@@ -19,26 +19,10 @@ import java.util.List;
 public class GroupService {
 
 
-//    @ManagedProperty(value = "#{sessionService}")
-//    private SessionService sessionService;
-    private EntityManagerFactory emf;
-    private EntityManager em;
 
     public List<Group> createGroups()
     {
-
-        //return sessionService.getSession().createCriteria(Group.class).list();
-
-        emf = Persistence.createEntityManagerFactory("pu");
-        em = emf.createEntityManager();
-        return em.createNamedQuery("getAllGroups").getResultList();
+        return DBService.getInstance().getEm().createNamedQuery("getAllGroups").getResultList();
     }
 
-//    public SessionService getSessionService() {
-//        return sessionService;
-//    }
-//
-//    public void setSessionService(SessionService sessionService) {
-//        this.sessionService = sessionService;
-//    }
 }

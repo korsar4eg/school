@@ -20,24 +20,13 @@ import java.util.List;
 @ApplicationScoped
 public class RoomsService {
 
-//    @ManagedProperty(value = "#{sessionService}")
-//    private SessionService sessionService;
 
-    private EntityManagerFactory emf;
-    private EntityManager em;
 
     public List<Room> createRooms()
     {
-        emf = Persistence.createEntityManagerFactory("pu");
-        em = emf.createEntityManager();
-        return em.createNamedQuery("getAllRooms").getResultList();
+        return DBService.getInstance()
+                        .getEm()
+                        .createNamedQuery("getAllRooms")
+                        .getResultList();
     }
-//
-//    public SessionService getSessionService() {
-//        return sessionService;
-//    }
-//
-//    public void setSessionService(SessionService sessionService) {
-//        this.sessionService = sessionService;
-//    }
 }

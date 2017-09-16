@@ -22,25 +22,9 @@ import java.util.List;
 @ApplicationScoped
 @Stateless
 public class LessonsService {
-
-//    @ManagedProperty(value = "#{sessionService}")
-//    private SessionService sessionService;
-
-    EntityManagerFactory emf;
-    EntityManager em;
-
     public List<Lesson> createLessons()
     {
-        emf = Persistence.createEntityManagerFactory("pu");
-        em = emf.createEntityManager();
-        return  em.createNamedQuery("getAllLessons").getResultList();
+        return  DBService.getInstance().getEm().createNamedQuery("getAllLessons").getResultList();
     }
 
-//    public SessionService getSessionService() {
-//        return sessionService;
-//    }
-//
-//    public void setSessionService(SessionService sessionService) {
-//        this.sessionService = sessionService;
-//    }
 }

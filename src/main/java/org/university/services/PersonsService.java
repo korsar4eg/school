@@ -24,41 +24,21 @@ import java.util.List;
 @Stateless
 public class PersonsService {
 
-//    @ManagedProperty(value = "#{sessionService}")
-//    private SessionService sessionService;
-
-    EntityManagerFactory emf;
-    EntityManager em;
-
-//    public SessionService getSessionService() {
-//        return sessionService;
-//    }
-//
-//    public void setSessionService(SessionService sessionService) {
-//        this.sessionService = sessionService;
-//    }
-
-
-
-    private void prepare()
-    {
-        if (emf == null && em == null){
-            emf = Persistence.createEntityManagerFactory("pu");
-            em = emf.createEntityManager();
-        }
-    }
-
     public List<Person> createStudents()
     {
 
-        prepare();
-        return em.createNamedQuery("getAllStudents").getResultList();
+        return DBService.getInstance()
+                        .getEm()
+                        .createNamedQuery("getAllStudents")
+                        .getResultList();
     }
 
     public List<Person> createTeachers()
     {
-        prepare();
-        return em.createNamedQuery("getAllTeachers").getResultList();
+        return DBService.getInstance()
+                        .getEm()
+                        .createNamedQuery("getAllTeachers")
+                        .getResultList();
     }
 
 

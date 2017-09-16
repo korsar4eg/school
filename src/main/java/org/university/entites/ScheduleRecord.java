@@ -12,6 +12,9 @@ import java.util.Date;
 @Entity
 @Table(name = "schedule_records")
 @Transactional
+@NamedQueries({
+        @NamedQuery(name = "getAllScheduleRecords", query = "select r from ScheduleRecord r")
+})
 public class ScheduleRecord implements Serializable {
 
 

@@ -8,6 +8,9 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +24,6 @@ public class ScheduleService {
 
     private Schedule schedule;
 
-    @ManagedProperty(value = "#{sessionService}")
-    private SessionService sessionService;
 
     private List<ScheduleRecord> resultRecords;
 
@@ -36,9 +37,7 @@ public class ScheduleService {
 
     public Schedule createSchedule()
     {
-        Schedule schedule =  new Schedule(sessionService.getSession().createCriteria(ScheduleRecord.class).list());
-        schedule.setSessionService(sessionService);
-        return schedule;
+        return new Schedule(DBService.getInstance().getEm().createNamedQuery("getAllScheduleRecords").getResultList());
     }
 
     public University getUniversity() {
@@ -85,16 +84,13 @@ public class ScheduleService {
     public void addScheduleRecord(Room room, Teacher teacher, Group group, Date lessonDate)
     {
         ScheduleRecord scheduleRecord = new ScheduleRecord(room, group, teacher, lessonDate);
-        Transaction tx = sessionService.getSession().beginTransaction();
-        sessionService.getSession().save(scheduleRecord);
-        tx.commit();
+        EntityManager em = DBService.getInstance().getEm();
+
+        em.getTransaction().begin();
+        em.persist(scheduleRecord);
+        em.getTransaction().commit();
+
+
     }
 
-    public SessionService getSessionService() {
-        return sessionService;
-    }
-
-    public void setSessionService(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
 }
